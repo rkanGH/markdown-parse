@@ -19,11 +19,8 @@ public class MarkdownParse {
             if(markdown.indexOf("[", currentIndex == -1) {
                 currentIndex = markdown.length();
             }
-            
-
             toReturn.add(markdown.substring(openParen + 1, closeParen));
-           
-            
+        
             
         }
         return toReturn;
