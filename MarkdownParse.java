@@ -23,6 +23,10 @@ public class MarkdownParse {
             }
             int closeParen = markdown.indexOf(")", openParen);
             
+            if(closeParen == -1) {
+                break;
+            }
+            
             currentIndex = closeParen + 1;
             if((markdown.substring(openParen + 1, closeParen).contains("https") || (markdown.substring(openParen + 1, closeParen).contains("html")))) {
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
