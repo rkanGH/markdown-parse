@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class MarkdownParse {
+public class originalMarkdown {
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then take up to
@@ -12,26 +12,12 @@ public class MarkdownParse {
         int currentIndex = 0;
         while(currentIndex < markdown.length()) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            if(nextOpenBracket == -1) {
-                break;
-            }
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
-            if(openParen != nextCloseBracket + 1) {
-                currentIndex = openParen;
-                continue;
-            }
             int closeParen = markdown.indexOf(")", openParen);
-            if(closeParen == -1) {
-                break;
-            }
+            toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
-            if((markdown.substring(openParen + 1, closeParen).contains("https") || (markdown.substring(openParen + 1, closeParen).contains("html")))) {
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
-            }
-            
-        
-            
+            System.out.println(currentIndex);
         }
         return toReturn;
     }
