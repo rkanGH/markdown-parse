@@ -1,4 +1,4 @@
 # Title
 
-[a link!](image.url)
+[a link!](image.png)
 [another link!](some-page.html)
