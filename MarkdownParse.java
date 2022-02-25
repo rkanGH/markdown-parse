@@ -1,4 +1,4 @@
-// File reading code from https://howtodoinjava.com/java/io/java-read-file-to-string-examples/
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,29 +10,33 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
+        System.out.println(currentIndex);
+        boolean isImage = false;
         while(currentIndex < markdown.length()) {
+            isImage = false; 
+            if(markdown.indexOf("![", currentIndex)!=-1) isImage = true;
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
-            if(nextOpenBracket == -1) {
-                break;
-            }
+	    int isTilda = markdown.indexOf("~", nextOpenBracket);
+	    if(isTilda>=0)break;
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
+            //break for joetest7.md
+            if(nextCloseBracket==-1)break;
+            //break for joetest8.md
+            if(nextOpenBracket==nextCloseBracket-1)break;
             int openParen = markdown.indexOf("(", nextCloseBracket);
-            if(openParen != nextCloseBracket + 1) {
-                currentIndex = openParen;
-                continue;
-            }
+            //break for joetest5.md
+            if(nextCloseBracket!=openParen-1)break;
             int closeParen = markdown.indexOf(")", openParen);
-            
-            if(closeParen == -1) {
-                break;
-            }
-            
             currentIndex = closeParen + 1;
-            if((markdown.substring(openParen + 1, closeParen).contains("https") || (markdown.substring(openParen + 1, closeParen).contains("html")))) {
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
+            if(closeParen==-1) break;
+            if(markdown.indexOf("[", currentIndex)==-1){
+                currentIndex = markdown.length();
             }
-            
-        
+            if(!isImage){
+             toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
+            System.out.println(currentIndex);
+            System.out.println(":)");
             
         }
         return toReturn;
