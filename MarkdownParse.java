@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.net.URL;
 
 public class MarkdownParse {
     public static ArrayList<String> getLinks(String markdown) {
@@ -10,7 +11,7 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
-        System.out.println(currentIndex);
+        //System.out.println(currentIndex);
         boolean isImage = false;
         while(currentIndex < markdown.length()) {
             isImage = false; 
@@ -35,11 +36,21 @@ public class MarkdownParse {
             if(!isImage){
              toReturn.add(markdown.substring(openParen + 1, closeParen));
             }
-            System.out.println(currentIndex);
-            System.out.println(":)");
+            //System.out.println(currentIndex);
+            //System.out.println(":)");
             
         }
-        return toReturn;
+        try{
+            for(String s: toReturn) {
+                URL url = new URL(s);
+            }
+            return toReturn;
+        } catch(Exception e) {
+            ArrayList<String> empty = new ArrayList<>();
+            return empty;
+        }
+        
+        //return toReturn;
     }
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);

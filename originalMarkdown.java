@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.net.URL;
 
 public class originalMarkdown {
     public static ArrayList<String> getLinks(String markdown) {
@@ -20,7 +21,15 @@ public class originalMarkdown {
             
             
         }
-        return toReturn;
+        try{
+            for(String s: toReturn) {
+                URL url = new URL(s);
+            }
+            return toReturn;
+        } catch(Exception e) {
+            ArrayList<String> empty = new ArrayList<>();
+            return empty;
+        }
     }
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);
